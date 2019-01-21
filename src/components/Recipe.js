@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import Saved from './Saved'
+import axios from 'axios';
+import './recipe.css';
 
 
 
@@ -7,36 +9,54 @@ class Recipe extends Component{
   constructor(props){
     super(props);
     this.state = {
-      savedRecipes: []
+      
+      title: "",
+      image: "",
+      cooktime: "", 
+      servings: "",
+      instructions: "", 
+      ingredients: "",
+      savedRecipe: []
     }
   }
 
   clickSaver = () =>{
-    let savedRecipe = {
-      title: this.props.title,
-      picture: this.props.picture,
-      cooktime: this.props.cooktime,
-      servings: this.props.servings,
-      instructions: this.props.instructions
-    }
+   
+    // this.setState({title: this.props.title,
+    //   image: this.props.image,
+    //   cooktime: this.props.cooktime,
+    //   servings: this.props.servings, 
+    //   instructions: this.props.instructions,
+    //   ingredients: this.props.ingredients})
     
-    this.setState({savedRecipes: [...this.state.savedRecipes,savedRecipe]})
-    
-    console.log(this.state.savedRecipes)
+      let savedRecipe = {
+        title: this.props.title,
+        image: this.props.image,
+        cooktime: this.props.cooktime,
+        servings: this.props.servings,
+        instructions: this.props.instructions,
+        ingredients: this.props.ingredients
+      }
+    let i =0;
+
+    axios.post("/api/recipes/save",savedRecipe).then(res => {this.setState({savedRecipe:[...this.state.savedRecipe,res.data[i]]});
+    i++
+    console.log(res.data)}) ;
     
   }
 
   render(){
     return(
-      <div>
+      <div className = "main">
         <h3>{this.props.title}</h3>
-        <img src = {this.props.picture} alt = "NA" width = "250vw"/>
+        <img src = {this.props.image} alt = "NA" width = "250vw"/>
         <p>This recipe can be prepared in {this.props.cooktime} minutes and serves {this.props.servings} people</p>
 
         <p>{this.props.instructions}</p>
-        <button onClick = {(e)=>this.clickSaver(e)}>Click to Save Recipe</button>
 
-        <Saved savedRecipes = {this.state.savedRecipes}/>
+        <button onClick = {()=>this.clickSaver()}>Click to Save Recipe</button>
+
+        <Saved savedRecipe = {this.state.savedRecipe}/>
       </div>
     )
   }

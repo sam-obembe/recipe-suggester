@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import ShoppingList from './ShoppingList'
-import Axios from 'axios';
+import './ingredients.css'
+// import Axios from 'axios';
 
 class Ingredients extends Component{
   constructor(props){
@@ -19,11 +20,15 @@ class Ingredients extends Component{
   ingredientLister =()=>{
    
     let ingredientsDisplay = this.state.ingredients.map((ingredient,id) =>{
-     return (<p key ={id} onClick = {()=>this.shoppingListAdd(ingredient.original)}>{ingredient.original}</p>) 
-    }
+      return (
+      <p key ={id} onClick = {()=>this.shoppingListAdd(ingredient.original)} >
+      {ingredient.original}
+      </p>
+      ) 
+     })
     
-    ) 
-    console.log(ingredientsDisplay)
+    // ) 
+    // console.log(ingredientsDisplay)
     return ingredientsDisplay
   }
 
@@ -42,11 +47,11 @@ class Ingredients extends Component{
   
   //return list of ingredients
   render(){
-
-    
+    console.log(this.state.ingredients)
+    console.log(this.props)
     return(
-      <div>
-        
+      <div className = "main">
+        <h2>Ingredients</h2>
         {this.ingredientLister()}
         <ShoppingList items = {this.state.shoppingList} itemDeleter = {this.shoppingListRemove}/>
       </div>

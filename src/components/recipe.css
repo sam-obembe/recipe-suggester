@@ -1,0 +1,8 @@
+.main{
+  width: 400px;
+  float: left;
+  text-align: justify;
+  margin-left: 20px;
+  border: 2px black solid;
+  border-radius: 30px;
+}

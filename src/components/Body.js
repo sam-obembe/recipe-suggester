@@ -1,13 +1,14 @@
 import React, {Component} from 'react'
 import Recipe from './Recipe'
-import Nutrients from './Nutrients'
+// import Nutrients from './Nutrients'
 import Ingredients from './Ingredients'
-import recipes from './sampledata';
+// import recipes from './sampledata';
 import axios from 'axios'
+
 
 import './Body.css'
 
-let importedRecipe=recipes;
+// let importedRecipe;
 
 
 class Body extends Component{
@@ -15,30 +16,43 @@ class Body extends Component{
     super();
     //set state of recipe to imported recipe object data
     this.state = {
-        recipe: importedRecipe
+        recipe: "",
     }
+    this.reset = this.reset.bind(this);
   }
   componentDidMount(){
-    axios.get("https://localhost:5001/api/recipes").then(res => {console.log(res);
-     importedRecipe = res})
+    this.recipeGetter();
   }
-  
+
+  recipeGetter = () =>{
+    axios.get("/api/recipes").then(res => {console.log(res);
+      this.setState({recipe:res.data});
+       console.log(this.state.recipe)})
+  }
+
+  reset(){
+    this.setState({recipe:""});
+    window.location.reload();
+  }
+
   render(){
     //simplify recip list name to recipeData
-    let recipeData = this.state.recipe.recipes[0]
+    let recipeData = this.state.recipe;
 
     //deconstruct recipeData
-    let {title,image,readyInMinutes,servings,instructions,extendedIngredients} = recipeData
-    console.log(this.state.recipe.recipes[0])
+    let {title,image,cooktime,servings,instructions,ingredients} = recipeData
+    console.log(ingredients)
 
     return(
       <div>
         {/* assign recipe title, name, picture, servings and instructions to Recipe component as props */}
-        <Recipe title = {title} picture = {image} cooktime = {readyInMinutes} servings = {servings} instructions = {instructions}/>
-        <Nutrients />
+        <Recipe title = {title} image = {image} cooktime = {cooktime} servings = {servings} instructions = {instructions} refresh = {this.componentDidMount}/>
+        {/* <Nutrients />  */}
 
         {/* assign array of extendedIngredients as props to Ingredients component */}
-        <Ingredients ingredientsArray = {extendedIngredients}/>
+       {ingredients && <Ingredients ingredientsArray = { ingredients}/>}
+       <button onClick = {()=>this.recipeGetter()}>Shuffle</button>
+       
       </div>
     )
   }

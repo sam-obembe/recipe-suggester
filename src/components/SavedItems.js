@@ -3,9 +3,9 @@ import React from 'react';
 const SavedItems = (props) =>{
   return(
     <div>
-      {/* {props.saved["title"]} */}
+       {/* {props.saved.map((savedRecipe)=> <p>{savedRecipe.title}</p>)} */}
     </div>
-      // {props.saved.map((savedRecipe)=> <p>{savedRecipe.title}</p>)}
+    
     
   )
 }
