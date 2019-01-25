@@ -8,13 +8,14 @@ var savedRecipes = [];
 let shoppingList = [];
 let id = 0;
 let shopid = 0;
-axios.defaults.headers.common['Authorization'] = "07b6b6d2d8msh04e163123f26a56p158aeejsnf964ad342355"
+let key = ""
+
 
 
 module.exports = {
   retrieve: (req,res)=>{
     
-    axios.get("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=1",{"headers":{"X-RapidAPI-Key": "07b6b6d2d8msh04e163123f26a56p158aeejsnf964ad342355"}}).then(response => {
+    axios.get("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=1",{"headers":{"X-RapidAPI-Key": "insert key here"}}).then(response => {
       recipes = response.data.recipes; 
       let generatedRecipe = {
         title: recipes[0].title,
@@ -70,8 +71,4 @@ module.exports = {
 
 
     
-  //   unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=1&tags=vegetarian%2Cdessert").header("X-RapidAPI-Key", "07b6b6d2d8msh04e163123f26a56p158aeejsnf964ad342355").end(function (result) {
-  // console.log(result.status, result.headers, result.body
-  //   )
-  //   res.status(200).send(result.body)
-  // });
+  
