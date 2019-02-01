@@ -1,21 +1,20 @@
-
+require("dotenv").config()
 var axios = require('axios')
-var unirest = require('unirest')
-let recipes ;
+var recipes ;
 //var genRec ;
 
 var savedRecipes = [];
 let shoppingList = [];
-let id = 0;
+var id = 0;
 let shopid = 0;
-axios.defaults.headers.common['Authorization'] = "07b6b6d2d8msh04e163123f26a56p158aeejsnf964ad342355"
+
 
 
 module.exports = {
   retrieve: (req,res)=>{
     
-    axios.get("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=1",{"headers":{"X-RapidAPI-Key": "07b6b6d2d8msh04e163123f26a56p158aeejsnf964ad342355"}}).then(response => {
-      recipes = response.data.recipes; 
+    axios.get("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=1",{"headers":{"X-RapidAPI-Key": process.env.API_KEY}}).then(response => {
+      recipes= response.data.recipes ; 
       let generatedRecipe = {
         title: recipes[0].title,
         image: recipes[0].image,
@@ -30,19 +29,63 @@ module.exports = {
   
     })
     .catch("can't get recipe"); 
+    id++
   },
   
   save: (req,res)=>{
      const {title,image,servings,cooktime,ingredients,instructions} = req.body;
-     let savedRec = {title:title,image:image,servings:servings,cooktime:cooktime,ingredients:ingredients, instructions:instructions};
+     let savedRec = {
+      title:title,
+      image:image,
+      servings:servings,
+      cooktime:cooktime,
+      ingredients:ingredients, instructions:instructions
+      };
      savedRecipes.push(savedRec);
      res.status(200).send(savedRecipes);
      id++;
      
   },
 
+  addToShoppingList: (req,res) =>{
+    //console.log(req.body)
+    const {ing} = req.body;
+    console.log(ing)
+    shoppingList.push(ing)
+    //let shopItem ={id:shopid, item:item}
+    //shoppingList.push(item);
+    //shopid++;
+    res.status(200).send(shoppingList);
+  },
+
+  removeFromShopping: (req,res) =>{
+    const item = req.params.item
+    console.log(item)
+    let loc = shoppingList.indexOf(item)
+    if(shoppingList.length === 0){
+      shoppingList = []
+    } else {
+      shoppingList.splice(loc,1)
+    }
+    res.status(200).send(shoppingList)
+    console.log(shoppingList)
+    
+  },
+
+  listEdit: (req,res)=>{
+    console.log(req.params.incoming)
+    let change = req.params.incoming
+    //let change = req.params
+    shoppingList = change.split(",")
+    res.send(shoppingList)
+  },
+
   getSaved: (req,res) =>{
     res.status(200).send(savedRecipes)
+  },
+
+  getShoppingList: (req,res) =>{
+    res.status(200).send(shoppingList)
   },
 
   remove: (req,res) =>{

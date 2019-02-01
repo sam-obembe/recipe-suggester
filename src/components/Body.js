@@ -1,14 +1,8 @@
 import React, {Component} from 'react'
 import Recipe from './Recipe'
-// import Nutrients from './Nutrients'
 import Ingredients from './Ingredients'
-// import recipes from './sampledata';
 import axios from 'axios'
-
-
 import './Body.css'
-
-// let importedRecipe;
 
 
 class Body extends Component{
@@ -25,23 +19,25 @@ class Body extends Component{
   }
 
   recipeGetter = () =>{
-    axios.get("/api/recipes").then(res => {console.log(res);
-      this.setState({recipe:res.data});
-       console.log(this.state.recipe)})
+    this.setState({recipe:""});
+    axios.get("/api/recipes").then(res => {
+    this.setState({recipe:res.data});
+    })
   }
+ 
 
   reset(){
-    this.setState({recipe:""});
+    this.setState({recipe:{}});
     window.location.reload();
   }
 
   render(){
     //simplify recip list name to recipeData
-    let recipeData = this.state.recipe;
+    //let recipeData = this.state.recipe;
 
     //deconstruct recipeData
-    let {title,image,cooktime,servings,instructions,ingredients} = recipeData
-    console.log(ingredients)
+    let {title,image,cooktime,servings,instructions,ingredients} = this.state.recipe
+    //console.log(ingredients)
 
     return(
       <div>
@@ -50,7 +46,7 @@ class Body extends Component{
         {/* <Nutrients />  */}
 
         {/* assign array of extendedIngredients as props to Ingredients component */}
-       {ingredients && <Ingredients ingredientsArray = { ingredients}/>}
+       {ingredients&& <Ingredients ingredientsArray = { ingredients} shuffler = {this.recipeGetter}/>}
        <button onClick = {()=>this.recipeGetter()}>Shuffle</button>
        
       </div>

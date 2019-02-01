@@ -15,37 +15,33 @@ class Recipe extends Component{
       cooktime: "", 
       servings: "",
       instructions: "", 
-      ingredients: "",
+      ingredients: {},
       savedRecipe: []
     }
   }
 
   clickSaver = () =>{
-   
-    // this.setState({title: this.props.title,
-    //   image: this.props.image,
-    //   cooktime: this.props.cooktime,
-    //   servings: this.props.servings, 
-    //   instructions: this.props.instructions,
-    //   ingredients: this.props.ingredients})
-    
-      let savedRecipe = {
-        title: this.props.title,
-        image: this.props.image,
-        cooktime: this.props.cooktime,
-        servings: this.props.servings,
-        instructions: this.props.instructions,
-        ingredients: this.props.ingredients
-      }
-    let i =0;
-
-    axios.post("/api/recipes/save",savedRecipe).then(res => {this.setState({savedRecipe:[...this.state.savedRecipe,res.data[i]]});
-    i++
-    console.log(res.data)}) ;
+ 
+    let savedRecipe = {
+      title: this.props.title,
+      image: this.props.image,
+      cooktime: this.props.cooktime,
+      servings: this.props.servings,
+      instructions: this.props.instructions,
+      ingredients: this.props.ingredients
+    }
+    var fromServer
+    axios.post("/api/recipes/save",savedRecipe).then(res => {
+       fromServer = res.data
+      //this.setState({savedRecipe: [res.data]})
+      console.log(fromServer)
+      this.setState({savedRecipe: fromServer})
+    }) ;
     
   }
 
   render(){
+
     return(
       <div className = "main">
         <h3>{this.props.title}</h3>

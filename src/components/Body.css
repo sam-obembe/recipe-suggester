@@ -2,3 +2,10 @@
   background-color: green;
   
 }
+
+#input{
+  width: 350px;
+  height: 160px;
+  float:center;
+  border-radius: 20px;
+}
