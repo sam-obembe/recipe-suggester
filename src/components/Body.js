@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Recipe from './Recipe'
 import Ingredients from './Ingredients'
+import Button from '@material-ui/core/Button'
 import axios from 'axios'
 import './Body.css'
 
@@ -8,11 +9,9 @@ import './Body.css'
 class Body extends Component{
   constructor(){
     super();
-    //set state of recipe to imported recipe object data
     this.state = {
-        recipe: "",
+      recipe: "",
     }
-    this.reset = this.reset.bind(this);
   }
   componentDidMount(){
     this.recipeGetter();
@@ -26,28 +25,22 @@ class Body extends Component{
   }
  
 
-  reset(){
+  reset=()=>{
     this.setState({recipe:{}});
     window.location.reload();
   }
 
   render(){
-    //simplify recip list name to recipeData
-    //let recipeData = this.state.recipe;
 
-    //deconstruct recipeData
     let {title,image,cooktime,servings,instructions,ingredients} = this.state.recipe
-    //console.log(ingredients)
 
     return(
       <div>
-        {/* assign recipe title, name, picture, servings and instructions to Recipe component as props */}
-        <Recipe title = {title} image = {image} cooktime = {cooktime} servings = {servings} instructions = {instructions} refresh = {this.componentDidMount}/>
+        <Button onClick = {()=>this.recipeGetter()}>Shuffle</Button>
+        <Recipe title = {title} image = {image} cooktime = {cooktime} servings = {servings} instructions = {instructions} refresh = {this.recipeGetter}/>
         {/* <Nutrients />  */}
-
-        {/* assign array of extendedIngredients as props to Ingredients component */}
        {ingredients&& <Ingredients ingredientsArray = { ingredients} shuffler = {this.recipeGetter}/>}
-       <button onClick = {()=>this.recipeGetter()}>Shuffle</button>
+       
        
       </div>
     )

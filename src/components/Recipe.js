@@ -1,9 +1,14 @@
 import React, {Component} from 'react'
 import Saved from './Saved'
 import axios from 'axios';
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardMedia from '@material-ui/core/CardMedia'
+import CardContent from '@material-ui/core/CardContent'
+import CardActionArea from '@material-ui/core/CardActionArea'
+//import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
 import './recipe.css';
-
-
 
 class Recipe extends Component{
   constructor(props){
@@ -43,17 +48,30 @@ class Recipe extends Component{
   render(){
 
     return(
-      <div className = "main">
-        <h3>{this.props.title}</h3>
-        <img src = {this.props.image} alt = "NA" width = "250vw"/>
-        <p>This recipe can be prepared in {this.props.cooktime} minutes and serves {this.props.servings} people</p>
+ 
+        <Card className = "main">
+          <CardHeader component ="h2" title = {this.props.title}/>
+         
 
-        <p>{this.props.instructions}</p>
+          <CardMedia component = "img" src ={this.props.image} id = "media"/>
+          {/* <img src = {this.props.image} alt = "NA" width = "250vw"/> */}
 
-        <button onClick = {()=>this.clickSaver()}>Click to Save Recipe</button>
+          <CardContent>
+            <p>This recipe can be prepared in {this.props.cooktime} minutes and serves {this.props.servings} people</p>
+            <div id = "instructions">
+              <p>{this.props.instructions}</p>
+            </div>
+            
+          </CardContent>
 
-        <Saved savedRecipe = {this.state.savedRecipe}/>
-      </div>
+          <CardActionArea>
+            <Button onClick = {()=>this.clickSaver()}>Click to Save Recipe</Button>
+          </CardActionArea>
+          
+          <Saved savedRecipe = {this.state.savedRecipe}/>
+
+        </Card>
+   
     )
   }
 }

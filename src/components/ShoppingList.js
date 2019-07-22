@@ -1,11 +1,11 @@
 import React from 'react';
-
+import Typography from '@material-ui/core/Typography'
 
 const ShoppingList = (props) =>{
   
   return(
     <div>
-      <h1>Shopping list component</h1>
+      <Typography variant = "h5">Shopping list</Typography>
       <ul>
       
       {props.items.map((item,id) => {

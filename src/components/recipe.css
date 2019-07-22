@@ -1,8 +1,19 @@
 .main{
   width: 400px;
+  min-height:75vh;
   float: left;
   text-align: justify;
   margin-left: 20px;
-  border: 2px black solid;
+  /* border: 2px black solid; */
   border-radius: 30px;
+}
+
+#instructions{
+  /*overflow:scroll;*/
+}
+
+#media{
+  height: 150px;
+  width: 75%;
+  margin: auto;
 }

@@ -1,19 +1,20 @@
 require("dotenv").config()
 var axios = require('axios')
+const auth = require('./auth')
 var recipes ;
-//var genRec ;
 
 var savedRecipes = [];
 let shoppingList = [];
 var id = 0;
 let shopid = 0;
 
-
-
 module.exports = {
   retrieve: (req,res)=>{
-    
-    axios.get("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=1",{"headers":{"X-RapidAPI-Key": process.env.API_KEY}}).then(response => {
+  
+    axios.get("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=1",{
+      "headers":{"X-RapidAPI-Key":auth.key}
+      })
+      .then(response => {
       recipes= response.data.recipes ; 
       let generatedRecipe = {
         title: recipes[0].title,
@@ -23,8 +24,6 @@ module.exports = {
         ingredients: recipes[0].extendedIngredients,
         instructions: recipes[0].instructions
       };
-      //genRec = generatedRecipe;
-      console.log(generatedRecipe);
       res.status(200).send(generatedRecipe);
   
     })
@@ -48,19 +47,13 @@ module.exports = {
   },
 
   addToShoppingList: (req,res) =>{
-    //console.log(req.body)
     const {ing} = req.body;
-    console.log(ing)
     shoppingList.push(ing)
-    //let shopItem ={id:shopid, item:item}
-    //shoppingList.push(item);
-    //shopid++;
     res.status(200).send(shoppingList);
   },
 
   removeFromShopping: (req,res) =>{
     const item = req.params.item
-    console.log(item)
     let loc = shoppingList.indexOf(item)
     if(shoppingList.length === 0){
       shoppingList = []
@@ -68,15 +61,13 @@ module.exports = {
       shoppingList.splice(loc,1)
     }
     res.status(200).send(shoppingList)
-    console.log(shoppingList)
     
   },
 
   listEdit: (req,res)=>{
-    console.log(req.params.incoming)
     let change = req.params.incoming
-    //let change = req.params
     shoppingList = change.split(",")
+    console.log(shoppingList)
     res.send(shoppingList)
   },
 
@@ -104,8 +95,4 @@ module.exports = {
     let toBuy = {id: shopid, item: ing};
     shoppingList.push(toBuy)
   }
-
-
-  
-
 }

@@ -1,6 +1,13 @@
 import React, {Component} from 'react'
 import ShoppingList from './ShoppingList'
 import Editbox from './Editbox'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+//import CardMedia from '@material-ui/core/CardMedia'
+import CardContent from '@material-ui/core/CardContent'
+import CardActionArea from '@material-ui/core/CardActionArea'
+//import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
 import './ingredients.css'
 import axios from 'axios';
 
@@ -8,7 +15,6 @@ import axios from 'axios';
 class Ingredients extends Component{
   constructor(props){
     super(props);
-    //set ingredients state to props.ingredientsArray
     this.state = {
       shoppingList :[],
       ingredients: [],
@@ -25,7 +31,6 @@ class Ingredients extends Component{
    
   }
 
-  //create a function to list ingredients from this.state.ingredients
   ingredientLister =()=>{
    
     let ingredientsDisplay = this.state.ingredients.map((ingredient,id) =>{
@@ -36,33 +41,21 @@ class Ingredients extends Component{
       ) 
     
      })
-    
-    //console.log(ingredientsDisplay)
     return ingredientsDisplay
   }
 
   shoppingListAdd = (ing)=>{
-    //replace this with axios request posting shopping item to back end
-   
-    //this.setState({shoppingList:[...this.state.shoppingList,e]})
-    console.log(ing)
     axios.post("/api/shoppingList/add", {ing}).then(res =>{
-      //console.log(res.data)
       this.setState({shoppingList: res.data})
     })
-    console.log(this.state.shoppingList);
+
   }
 
   shoppingListRemove = (item) =>{
-    //console.log(item.target.textContent)
     let toSend = item.target.textContent
     axios.delete(`/api/shoppingList/remove/${toSend}`).then(res =>{
       this.setState({shoppingList: res.data})
     })
-    // let newList = this.state.shoppingList
-    // newList.splice(newList.indexOf(item),1)
-    // this.setState({shoppingList:newList})
-    console.log(this.state.shoppingList)
   }
 
   editToggle = () =>{
@@ -74,10 +67,6 @@ class Ingredients extends Component{
     
   }
 
-  
-
-  
-  //return list of ingredients
   render(){
   
     const editBoxDisplay= ()=>{
@@ -89,15 +78,21 @@ class Ingredients extends Component{
       
     }
     return(
-      <div className = "mainIngredients main">
-        <h2>Ingredients</h2>
-        {this.ingredientLister()}
-        <ShoppingList items = {this.state.shoppingList} itemDeleter = {this.shoppingListRemove} />
-        
-        <button onClick = {()=> this.editToggle()}>Edit</button>
+      <Card className = "main">
+        <CardHeader>
+          <h2>Ingredients</h2>
+        </CardHeader>
 
+        <CardContent>
+          {this.ingredientLister()}
+          <ShoppingList items = {this.state.shoppingList} itemDeleter = {this.shoppingListRemove} />
+        </CardContent>
+
+        <CardActionArea>
+          <Button onClick = {()=> this.editToggle()}>Edit</Button>
+        </CardActionArea>
         {editBoxDisplay()}
-      </div>
+      </Card>
     )
   }
 }
