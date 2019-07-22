@@ -109,12 +109,3 @@ module.exports = {
   
 
 }
-
-
-
-    
-  //   unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=1&tags=vegetarian%2Cdessert").header("X-RapidAPI-Key", "07b6b6d2d8msh04e163123f26a56p158aeejsnf964ad342355").end(function (result) {
-  // console.log(result.status, result.headers, result.body
-  //   )
-  //   res.status(200).send(result.body)
-  // });
