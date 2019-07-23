@@ -55,7 +55,7 @@ module.exports = {
   removeFromShopping: (req,res) =>{
     const item = req.params.item
     let loc = shoppingList.indexOf(item)
-    if(shoppingList.length === 0){
+    if(shoppingList.length <= 1){
       shoppingList = []
     } else {
       shoppingList.splice(loc,1)

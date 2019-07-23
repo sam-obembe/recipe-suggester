@@ -1,12 +1,9 @@
 import React, {Component} from 'react'
-import ShoppingList from './ShoppingList'
 import Editbox from './Editbox'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
-//import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
-import CardActionArea from '@material-ui/core/CardActionArea'
-//import Typography from '@material-ui/core/Typography'
+import CardActions from '@material-ui/core/CardActions'
 import Button from '@material-ui/core/Button'
 import './ingredients.css'
 import axios from 'axios';
@@ -16,7 +13,7 @@ class Ingredients extends Component{
   constructor(props){
     super(props);
     this.state = {
-      shoppingList :[],
+      //shoppingList :[],
       ingredients: [],
       basket:[],
       displayEditBox: false
@@ -35,27 +32,13 @@ class Ingredients extends Component{
    
     let ingredientsDisplay = this.state.ingredients.map((ingredient,id) =>{
       return (
-      <p key ={id} onClick = {()=>this.shoppingListAdd(ingredient.original)} >
+      <p key ={id} onClick = {()=>this.props.addShopping(ingredient.original)} >
       {ingredient.original}
       </p>
       ) 
     
      })
     return ingredientsDisplay
-  }
-
-  shoppingListAdd = (ing)=>{
-    axios.post("/api/shoppingList/add", {ing}).then(res =>{
-      this.setState({shoppingList: res.data})
-    })
-
-  }
-
-  shoppingListRemove = (item) =>{
-    let toSend = item.target.textContent
-    axios.delete(`/api/shoppingList/remove/${toSend}`).then(res =>{
-      this.setState({shoppingList: res.data})
-    })
   }
 
   editToggle = () =>{
@@ -79,18 +62,16 @@ class Ingredients extends Component{
     }
     return(
       <Card className = "main">
-        <CardHeader>
-          <h2>Ingredients</h2>
-        </CardHeader>
+        <CardHeader title="Ingredients"/>
 
         <CardContent>
           {this.ingredientLister()}
-          <ShoppingList items = {this.state.shoppingList} itemDeleter = {this.shoppingListRemove} />
         </CardContent>
 
-        <CardActionArea>
+          <CardActions>
           <Button onClick = {()=> this.editToggle()}>Edit</Button>
-        </CardActionArea>
+          </CardActions>
+   
         {editBoxDisplay()}
       </Card>
     )

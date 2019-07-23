@@ -2,26 +2,6 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
 p{
   font-family: 'Roboto',sans-serif;
   font-weight: 300;
@@ -30,6 +10,34 @@ p{
 li{
   font-family: 'Roboto',sans-serif;
   font-weight: 400;
+  list-style: none;
+}
+
+#navBar{
+  margin-bottom: 5vh;
+  background-color: black;
+  color:white;
+}
+
+#innerNav{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between
+}
+
+#innerNav h2{
+  font-family: 'Amatic SC', cursive;
+  font-weight: bold;
+}
+
+#shoppingList{
+  width:40vw;
+  height:0;
+}
+
+.myIcons:hover{
+  transform: scale(1.2);
+  color:green;
 }
 
 @keyframes App-logo-spin {

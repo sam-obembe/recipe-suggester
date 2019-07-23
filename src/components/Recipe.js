@@ -5,8 +5,7 @@ import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
-import CardActionArea from '@material-ui/core/CardActionArea'
-//import Typography from '@material-ui/core/Typography'
+import CardActions from '@material-ui/core/CardActions'
 import Button from '@material-ui/core/Button'
 import './recipe.css';
 
@@ -38,7 +37,6 @@ class Recipe extends Component{
     var fromServer
     axios.post("/api/recipes/save",savedRecipe).then(res => {
        fromServer = res.data
-      //this.setState({savedRecipe: [res.data]})
       console.log(fromServer)
       this.setState({savedRecipe: fromServer})
     }) ;
@@ -54,7 +52,6 @@ class Recipe extends Component{
          
 
           <CardMedia component = "img" src ={this.props.image} id = "media"/>
-          {/* <img src = {this.props.image} alt = "NA" width = "250vw"/> */}
 
           <CardContent>
             <p>This recipe can be prepared in {this.props.cooktime} minutes and serves {this.props.servings} people</p>
@@ -64,9 +61,9 @@ class Recipe extends Component{
             
           </CardContent>
 
-          <CardActionArea>
+          <CardActions>
             <Button onClick = {()=>this.clickSaver()}>Click to Save Recipe</Button>
-          </CardActionArea>
+          </CardActions>
           
           <Saved savedRecipe = {this.state.savedRecipe}/>
 
