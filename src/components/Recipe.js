@@ -7,6 +7,9 @@ import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
 import Button from '@material-ui/core/Button'
+import Icon from '@material-ui/core/Icon'
+import Tooltip from '@material-ui/core/Tooltip'
+import EmailSend from './EmailSend'
 import './recipe.css';
 
 class Recipe extends Component{
@@ -20,7 +23,8 @@ class Recipe extends Component{
       servings: "",
       instructions: "", 
       ingredients: {},
-      savedRecipe: []
+      savedRecipe: [],
+      emailSend: false,
     }
   }
 
@@ -43,8 +47,13 @@ class Recipe extends Component{
     
   }
 
-  render(){
+  shareEmail=()=> {
+    let toShow = this.state.emailSend? false:true
+    this.setState({emailSend:toShow})
+  }
 
+  render(){
+    let{title,image,cooktime,instructions,servings} = this.props
     return(
  
         <Card className = "main">
@@ -63,8 +72,15 @@ class Recipe extends Component{
 
           <CardActions>
             <Button onClick = {()=>this.clickSaver()}>Click to Save Recipe</Button>
+
+            <Tooltip title = "send to inbox">
+              <Icon className = "myIcons" onClick = {()=>{this.shareEmail()}}>email</Icon>
+            </Tooltip>
+            <br></br>
+         
+            
           </CardActions>
-          
+          {this.state.emailSend? <EmailSend recipe = {{title,image,cooktime,instructions,servings}}/>:null}
           <Saved savedRecipe = {this.state.savedRecipe}/>
 
         </Card>

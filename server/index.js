@@ -14,7 +14,7 @@ app.get("/api/recipes/saved",con.getSaved);
 //app.post("/api/recipes/save", con.adding)
 app.delete("/api/recipes/remove/:id", con.remove)
 app.delete("/api/shoppingList/remove/:item", con.removeFromShopping)
-
+app.post("/api/recipes/send",con.sendRecipe);
 app.put("/api/shoppingList/edit/:incoming", con.listEdit)
 app.listen(port,()=>console.log(`listening on ${port}`))
 

@@ -62,16 +62,18 @@ class Body extends Component{
     let {title,image,cooktime,servings,instructions,ingredients} = this.state.recipe
 
     return(
-      <div>
+      <div className = "bodyMain">
         <NavBar shopToggle = {this.toggleShopping}/>
         <Icon className = "myIcons"onClick = {()=>this.recipeGetter()}>refresh</Icon>
-
+        <div>
         <Recipe title = {title} 
         image = {image} cooktime = {cooktime} 
         servings = {servings} instructions = {instructions} 
         refresh = {this.recipeGetter}/>
 
        {ingredients&& <Ingredients ingredientsArray = { ingredients} shuffler = {this.recipeGetter} addShopping={this.addShopping}/>}
+
+       </div>
 
        <ShoppingList 
        items = {this.state.shoppingList} 

@@ -1,6 +1,16 @@
 require("dotenv").config()
 var axios = require('axios')
 const auth = require('./auth')
+const nodemailer = require("nodemailer")
+let transporter = nodemailer.createTransport({
+  host:"smtp.mail.yahoo.com",
+  port: 465,
+  secure: true,
+  auth: {
+    user: auth.email,
+    pass: auth.pass
+  }
+})
 var recipes ;
 
 var savedRecipes = [];
@@ -94,5 +104,31 @@ module.exports = {
     const {ing} = req.body;
     let toBuy = {id: shopid, item: ing};
     shoppingList.push(toBuy)
+  },
+
+  sendRecipe: (req,res)=> {
+    let {email,recipe} = req.body
+    console.log(email)
+    console.log(recipe)
+    transporter.sendMail({
+      from:auth.email,
+      to: email,
+      subject: recipe.title,
+      text: `
+        Here is the recipe you wanted:
+
+        ${recipe.title},
+        ${recipe.servings} servings
+        ${recipe.cooktime}
+        ${recipe.instructions}
+      `
+    },(err=>{
+      if(err){
+        console.log(err)
+      }else{
+        res.status(200).send("sent")
+      }
+    }))
+    
   }
 }
